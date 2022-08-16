@@ -87,7 +87,6 @@ export default {
       })
       if (this.manoeuvre === 'rotate') {
         this.roverYaw += this.mValue
-        this.manoeuvre = 'move'
       }
       else {
         const scale = this.pixelScale / 100
@@ -139,8 +138,6 @@ export default {
           this.roverX -= x * scale
           this.roverY -= y * scale
         }
-
-        this.manoeuvre = 'rotate'
       }
       this.mValue = 0
     }
