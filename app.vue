@@ -2,7 +2,7 @@
   <div class="columns">
     <div id="map" class="column">
       <div id="rover" :style="`width: ${pixelScale/100 * 40}px; height: ${pixelScale/100 * 45}px; transform: translate(${roverX}px, ${roverY}px) rotate(${roverYaw}deg)`">
-        <div id="mast" :style="`left: ${(pixelScale / 100 * 45 / 2)-2.5}px`"></div>
+        <div id="mast" :style="`left: ${(pixelScale / 100 * 40 / 2) - 2.5}px`"></div>
       </div>
     </div>
     <div id="control" class="column">
@@ -14,19 +14,19 @@
           </div>
         </div>
         <div class="field">
-          <label class="label">Position X</label>
+          <label class="label">X Position (pixels)</label>
           <div class="control">
             <input class="input" type="number" v-model="roverX">
           </div>
         </div>
         <div class="field">
-          <label class="label">Position Y</label>
+          <label class="label">Y Position (pixels)</label>
           <div class="control">
             <input class="input" type="number" v-model="roverY">
           </div>
         </div>
         <div class="field">
-          <label class="label">Rotation</label>
+          <label class="label">Rotation (degrees)</label>
           <div class="control">
             <input class="input" type="number" v-model="roverYaw">
           </div>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="field">
-          <label class="label">Amount</label>
+          <label class="label">Amount ({{ manoeuvre === 'rotate' ? 'Degrees' : 'cm'}})</label>
           <div class="control">
             <input class="input" type="number" v-model="mValue">
           </div>
@@ -97,10 +97,10 @@ export default {
         else if (this.roverYaw < 90) {
           const rads = 2 * Math.PI * (this.roverYaw / 360)
 
-          const x = this.mValue / Math.cos(rads)
-          const y = this.mValue / Math.sin(rads)          
-          this.roverX += x * scale
-          this.roverY -= y * scale
+          const x = this.mValue * Math.sin(rads) * scale
+          const y = this.mValue * Math.cos(rads) * scale      
+          this.roverX += x
+          this.roverY -= y
         }
         else if (this.roverYaw === 90) {
           const x = this.mValue 
@@ -109,8 +109,8 @@ export default {
         else if (this.roverYaw < 180) {
           const rads = 2 * Math.PI * ((this.roverYaw -90) / 360)
 
-          const x = this.mValue / Math.sin(rads) * scale
-          const y = this.mValue / Math.cos(rads) * scale          
+          const x = this.mValue * Math.cos(rads) * scale
+          const y = this.mValue * Math.sin(rads) * scale          
           this.roverX += x 
           this.roverY += y 
         }
@@ -121,8 +121,8 @@ export default {
         else if (this.roverYaw < 270) {
           const rads = 2 * Math.PI * ((this.roverYaw -180) / 360)
 
-          const x = this.mValue / Math.cos(rads) * scale
-          const y = this.mValue / Math.sin(rads) * scale      
+          const x = this.mValue * Math.sin(rads) * scale
+          const y = this.mValue * Math.cos(rads) * scale      
           this.roverX -= x
           this.roverY += y
         }
@@ -133,10 +133,10 @@ export default {
         else if (this.roverYaw < 360) {
           const rads = 2 * Math.PI * ((this.roverYaw -270) / 360)
 
-          const x = this.mValue / Math.sin(rads)
-          const y = this.mValue / Math.cos(rads)       
-          this.roverX -= x * scale
-          this.roverY -= y * scale
+          const x = this.mValue * Math.cos(rads) * scale
+          const y = this.mValue * Math.sin(rads) * scale
+          this.roverX -= x
+          this.roverY -= y
         }
       }
       this.mValue = 0
