@@ -100,24 +100,24 @@ export default {
 
           const x = this.mValue / Math.cos(rads)
           const y = this.mValue / Math.sin(rads)          
-          this.roverX += x
-          this.roverY -= y
+          this.roverX += x * scale
+          this.roverY -= y * scale
         }
         else if (this.roverYaw === 90) {
-          const x = this.mValue * scale
-          this.roverX += x
+          const x = this.mValue 
+          this.roverX += x * scale
         }
         else if (this.roverYaw < 180) {
           const rads = 2 * Math.PI * ((this.roverYaw -90) / 360)
 
           const x = this.mValue / Math.sin(rads) * scale
           const y = this.mValue / Math.cos(rads) * scale          
-          this.roverX += x
-          this.roverY += y
+          this.roverX += x 
+          this.roverY += y 
         }
         else if (this.roverYaw === 180) {
           const y = this.mValue * scale
-          this.roverY += y
+          this.roverY += y 
         }
         else if (this.roverYaw < 270) {
           const rads = 2 * Math.PI * ((this.roverYaw -180) / 360)
@@ -134,10 +134,10 @@ export default {
         else if (this.roverYaw < 360) {
           const rads = 2 * Math.PI * ((this.roverYaw -270) / 360)
 
-          const x = this.mValue / Math.sin(rads) * scale
-          const y = this.mValue / Math.cos(rads) * scale       
-          this.roverX -= x
-          this.roverY -= y
+          const x = this.mValue / Math.sin(rads)
+          const y = this.mValue / Math.cos(rads)       
+          this.roverX -= x * scale
+          this.roverY -= y * scale
         }
 
         this.manoeuvre = 'rotate'
