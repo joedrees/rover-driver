@@ -1,8 +1,10 @@
 <template>
   <div class="columns">
     <div id="map" class="column">
-      <div id="rover" :style="`width: ${pixelScale/100 * 40}px; height: ${pixelScale/100 * 45}px; transform: translate(${roverX}px, ${roverY}px) rotate(${roverYaw}deg)`">
+      <div id="rover" :style="`transition: all ${speed/1000}s ease-in-out; width: ${pixelScale/100 * 40}px; height: ${pixelScale/100 * 45}px; transform: translate(${roverX}px, ${roverY}px) rotate(${roverYaw}deg)`">
         <div id="mast" :style="`left: ${(pixelScale / 100 * 40 / 2) - 2.5}px`"></div>
+        <div :class="{ 'is-hidden': !goFast }" class="go-faster-stripe" :style="`height: ${pixelScale/100*45}px; left: ${(pixelScale / 100 * 40 / 2) - 10}px`"></div>
+        <div :class="{ 'is-hidden': !goFast }" class="go-faster-stripe" :style="`height: ${pixelScale/100*45}px; left: ${(pixelScale / 100 * 40 / 2) + 8}px`"></div>
       </div>
     </div>
     <div id="control" class="column">
@@ -53,8 +55,16 @@
         </div>
 
         <div class="buttons">
-          <button class="button" @click="perform">Submit</button>
-          <button class="button is-primary" @click="retrace">Retrace Our Steps</button>
+          <div class="field">
+            <button class="button" @click="perform">Submit</button>
+            <button class="button is-primary" @click="retrace">Retrace Our Steps</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" v-model="goFast">
+            Go Fast
+          </label>
         </div>
       </div>
       <pre>{{ traverse }}</pre>
@@ -77,6 +87,7 @@ export default {
       manoeuvre: 'rotate',
       mValue: 0,
       traverse: [],
+      goFast: false,
       whatWeDid: [
         {
           type: 'rotate',
@@ -161,14 +172,18 @@ export default {
       }
     }
   },
+  computed: {
+    speed() {
+      return this.goFast ? 100 : 1000
+    }
+  },
   methods: {
-
     async retrace() {
       for (const step of this.whatWeDid) {
         this.manoeuvre = step.type
         this.mValue = step.value
         this.perform()
-        await delay(1000)
+        await delay(this.speed)
       }
     },
     perform() {
@@ -204,13 +219,18 @@ export default {
 #rover {
   background-color: #f0f;
   position: absolute;
-  transition: all 1s ease-in-out;
 }
 #mast {
   height: 5px;
   width: 5px;
   background-color: #000;
   position: relative;
+}
+.go-faster-stripe {
+  top: 0px;
+  width: 2px;
+  background-color: #0f0;
+  position: absolute;
 }
 .divider {
   width: 100%;
