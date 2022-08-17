@@ -63,10 +63,10 @@
 export default {
   data() {
     return {
-      roverX: 40,
-      roverY: 690,
-      roverYaw: 45,
-      pixelScale: 100,
+      roverX: this.$route.query.x || 40,
+      roverY: this.$route.query.y || 690,
+      roverYaw: this.$route.query.r || 45,
+      pixelScale: this.$route.query.s || 100,
       manoeuvre: 'rotate',
       mValue: 0,
       traverse: []
