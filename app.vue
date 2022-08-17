@@ -52,7 +52,10 @@
           </div>
         </div>
 
-        <button class="button" @click="perform">Submit</button>
+        <div class="buttons">
+          <button class="button" @click="perform">Submit</button>
+          <button class="button is-primary" @click="retrace">Retrace Our Steps</button>
+        </div>
       </div>
       <pre>{{ traverse }}</pre>
     </div>
@@ -60,6 +63,10 @@
 </template>
 
 <script>
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
 export default {
   data() {
     return {
@@ -69,7 +76,81 @@ export default {
       pixelScale: parseInt(this.$route.query.s) || 100,
       manoeuvre: 'rotate',
       mValue: 0,
-      traverse: []
+      traverse: [],
+      whatWeDid: [
+        {
+          type: 'rotate',
+          value: 15,
+        },
+        {
+          type: 'move',
+          value: 50,
+        },
+        {
+          type: 'move',
+          value: -50,
+        },
+        {
+          type: 'rotate',
+          value: 30,
+        },
+        {
+          type: 'move',
+          value: 125,
+        },
+        {
+          type: 'rotate',
+          value: -90,
+        },
+        {
+          type: 'move',
+          value: 125,
+        },
+        {
+          type: 'rotate',
+          value: 64,
+        },
+        {
+          type: 'move',
+          value: 112,
+        },
+        {
+          type: 'rotate',
+          value: -50,
+        },
+        {
+          type: 'move',
+          value: 55,
+        },
+        {
+          type: 'move',
+          value: -50,
+        },
+        {
+          type: 'rotate',
+          value: -23,
+        },
+        {
+          type: 'move',
+          value: 181,
+        },
+        {
+          type: 'rotate',
+          value: -64,
+        },
+        {
+          type: 'move',
+          value: 150,
+        },
+        {
+          type: 'rotate',
+          value: 50,
+        },
+        {
+          type: 'move',
+          value: 75,
+        },
+      ],
     };
   },
   watch: {
@@ -81,6 +162,15 @@ export default {
     }
   },
   methods: {
+
+    async retrace() {
+      for (const step of this.whatWeDid) {
+        this.manoeuvre = step.type
+        this.mValue = step.value
+        this.perform()
+        await delay(1000)
+      }
+    },
     perform() {
       this.traverse.push({
         [this.manoeuvre]: this.mValue
