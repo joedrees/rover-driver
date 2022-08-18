@@ -5,6 +5,7 @@
         <div id="mast" :style="`left: ${(pixelScale / 100 * 40 / 2) - 2.5}px`"></div>
         <div :class="{ 'is-hidden': !goFast }" class="go-faster-stripe" :style="`height: ${pixelScale/100*45}px; left: ${(pixelScale / 100 * 40 / 2) - 10}px`"></div>
         <div :class="{ 'is-hidden': !goFast }" class="go-faster-stripe" :style="`height: ${pixelScale/100*45}px; left: ${(pixelScale / 100 * 40 / 2) + 8}px`"></div>
+        <div v-if="angles" class="thingy-line" v-for="line of lines" :key="line" :style="`left: ${(pixelScale / 100 * 40 / 2)}px; transform: rotate(${line}deg)`" />
       </div>
     </div>
     <div id="control" class="column">
@@ -66,6 +67,12 @@
             Go Fast
           </label>
         </div>
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" v-model="angles">
+            Angles
+          </label>
+        </div>
       </div>
       <pre>{{ traverse }}</pre>
     </div>
@@ -85,6 +92,7 @@ export default {
       roverYaw: parseInt(this.$route.query.r) || 45,
       pixelScale: parseInt(this.$route.query.s) || 100,
       manoeuvre: 'rotate',
+      angles: false,
       mValue: 0,
       traverse: [],
       goFast: false,
@@ -237,5 +245,17 @@ export default {
   height: 1px;
   margin: 25px 0;
   background-color: #ccc;
+}
+.thingy-line {
+  width: 2px;
+  height: 500px;
+  top: -250px;
+  position: absolute;
+  background-color: #000;
+}
+.circle {
+  border-radius:50%;
+  border: solid thin #0ff;
+  position: absolute;
 }
 </style>
