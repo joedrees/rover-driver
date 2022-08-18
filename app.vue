@@ -94,6 +94,7 @@ export default {
       manoeuvre: 'rotate',
       angles: false,
       mValue: 0,
+      lines: [0,30,60,90,120,150,180,210,240,270,300,330,360],
       traverse: [],
       goFast: false,
       whatWeDid: [
