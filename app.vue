@@ -87,8 +87,8 @@ function delay(time) {
 export default {
   data() {
     return {
-      roverX: parseInt(this.$route.query.x )|| 50,
-      roverY: parseInt(this.$route.query.y) || 790,
+      roverX: parseInt(this.$route.query.x )|| 56,
+      roverY: parseInt(this.$route.query.y) || 871,
       roverYaw: parseInt(this.$route.query.r) || 45,
       pixelScale: parseInt(this.$route.query.s) || 100,
       manoeuvre: 'rotate',
@@ -170,6 +170,22 @@ export default {
           type: 'move',
           value: 75,
         },
+        {
+          type: 'move',
+          value: 50,
+        },
+        {
+          type: 'rotate',
+          value: 41,
+        },
+        {
+          type: 'move',
+          value: 280,
+        },
+        {
+          type: 'rotate',
+          value: -100,
+        },
       ],
     };
   },
@@ -223,7 +239,7 @@ export default {
   background-image: url('/static/Chryse_orbital_image.png');
   background-repeat: no-repeat;
   background-size: contain;
-  height: 909px;
+  height: 1000px;
 }
 #rover {
   background-color: #f0f;
